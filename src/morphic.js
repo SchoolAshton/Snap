@@ -1311,8 +1311,8 @@ var modules = {}; // keep track of additional loaded modules
 var useBlurredShadows = true;
 
 const ZERO = new Point();
-const BLACK = new Color();
-const WHITE = new Color(255, 255, 255);
+const BLACK = new Grey();
+const WHITE = new Grey(255);
 const CLEAR = new Color(0, 0, 0, 0);
 
 Object.freeze(ZERO);
@@ -2384,7 +2384,39 @@ Color.prototype.solid = function () {
         this.b
     );
 };
+// Greys ///////////////////////////////////////////////////////////////
+var Grey;
 
+Grey.prototype = new Color();
+Grey.prototype.constructor = Grey;
+Grey.uber = Color.prototype;
+function Grey(v,a){
+    Color.call(this,v,v,v,a)
+    this.v = v||0
+};Object.defineProperties(Grey.prototype,Object.getOwnPropertyDescriptors({
+    get r(){
+        return this.v
+    },get g(){
+        return this.v
+    },get b(){
+        return this.v
+    },set r(val){
+        this.__proto__ = Grey.uber
+        this.r = val
+        this.g = this.v
+        this.b = this.v
+    },set g(val){
+        this.__proto__ = Grey.uber
+        this.r = this.v
+        this.g = val
+        this.b = this.v
+    },set b(val){
+        this.__proto__ = Grey.uber
+        this.r = this.v
+        this.g = this.v
+        this.b = val
+    },
+}))
 // Points //////////////////////////////////////////////////////////////
 
 // Point instance creation:
